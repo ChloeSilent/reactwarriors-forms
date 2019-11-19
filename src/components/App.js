@@ -1,12 +1,14 @@
 import React from "react";
+import countries from "../data/countries";
 
 export default class App extends React.Component {
     constructor() {
-      super();
+        super();
         this.state = {
-          username: "",
-          password: "",
-          repeatPassword: ""
+            username: "",
+            password: "",
+            repeatPassword: "",
+            country: ""
         }
     }
 
@@ -15,29 +17,21 @@ export default class App extends React.Component {
         e.preventDefault();
         console.log(this.state.password, this.state.username);
     }
-  onChangeUserName = (e) => {
-      console.log(e.target.value);
-      this.setState({username: e.target.value}
+    onChangeInput = (e) => {
+        console.log(e.target.name, e.target.value);
+        this.setState({[e.target.name]: e.target.value}
+        )
+    }
 
-      )
-  }
-
-  onChangePassword = (e) => {
-      this.setState({
-        password:e.target.value
-      })
-  }
-
-  onChangeRepeatPassword = (e) => {
-      this.setState(
-          {
-            repeatPassword: e.target.value
-          }
-      )
+  getOptionsItems = (items) => {
+    return(
+        items.map((item) => {
+          return <option key={item.id} value={item.name}>{item.name}</option>;
+        })
+    )
   }
 
     render() {
-        //console.log(this);
         return (
             <div className="form-container card">
                 <form className="form card-body">
@@ -47,11 +41,9 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter username"
-                            ref={node => {
-                                this.username = node
-                            }}
                             value={this.state.username}
-                            onChange={this.onChangeUserName}
+                            name="username"
+                            onChange={this.onChangeInput}
                         />
                     </div>
                     <div className="form-group">
@@ -60,11 +52,9 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter password"
-                            ref={node => {
-                                this.password = node
-                            }}
                             value={this.state.password}
-                            onChange={this.onChangePassword}
+                            name="password"
+                            onChange={this.onChangeInput}
                         />
                     </div>
                     <div className="form-group">
@@ -73,12 +63,20 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter repeat password"
-                            ref={node => {
-                                this.repeatPassword = node
-                            }}
                             value={this.state.repeatPassword}
-                            onChange={this.onChangeRepeatPassword}
+                            name="repeatPassword"
+                            onChange={this.onChangeInput}
                         />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="country">select country</label>
+                        <select className="form-control"
+                                id="country"
+                                value={this.state.country}
+                                name="country"
+                                onChange={this.onChangeInput}>
+                          {this.getOptionsItems(countries)}
+                        </select>
                     </div>
                     <button type="submit"
                             className="btn btn-primary w-100"
