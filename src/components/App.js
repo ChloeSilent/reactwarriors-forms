@@ -8,7 +8,9 @@ export default class App extends React.Component {
             username: "",
             password: "",
             repeatPassword: "",
-            country: ""
+            country: "",
+            gender: "female",
+            agree: true
         }
     }
 
@@ -22,14 +24,21 @@ export default class App extends React.Component {
         this.setState({[e.target.name]: e.target.value}
         )
     }
+    onChangeAgree = e => {
+      console.log(e.target.name, e.target.checked);
+      this.setState(
 
-  getOptionsItems = (items) => {
-    return(
-        items.map((item) => {
-          return <option key={item.id} value={item.name}>{item.name}</option>;
-        })
-    )
-  }
+          { [e.target.name]: !e.target.value }
+      )
+    }
+
+    getOptionsItems = (items) => {
+        return (
+            items.map((item) => {
+                return <option key={item.id} value={item.name}>{item.name}</option>;
+            })
+        )
+    }
 
     render() {
         return (
@@ -75,8 +84,50 @@ export default class App extends React.Component {
                                 value={this.state.country}
                                 name="country"
                                 onChange={this.onChangeInput}>
-                          {this.getOptionsItems(countries)}
+                            {this.getOptionsItems(countries)}
                         </select>
+                    </div>
+                    <fieldset className="form-group">
+                        <div>Gender</div>
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                id="male"
+                                name="gender"
+                                value="male"
+                                checked={this.state.gender === "male"}
+                                onChange={this.onChangeInput}
+                            />
+                            <label className="form-check-label" htmlFor="male">
+                                Male
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                id="female"
+                                name="gender"
+                                value="female"
+                                checked={this.state.gender === "female"}
+                                onChange={this.onChangeInput}
+                            />
+                            <label className="form-check-label" htmlFor="female">
+                                Female
+                            </label>
+                        </div>
+                    </fieldset>
+                    <div className="form-check">
+                        <input className="form-check-input"
+                               type="checkbox"
+                               id="agree"
+                               name="agree"
+                               value={this.state.agree}
+                               onChange={this.onChangeAgree}
+                               checked={this.state.agree}
+                        />
+                        <label className="form-check-label" htmlFor="agree">Agree</label>
                     </div>
                     <button type="submit"
                             className="btn btn-primary w-100"
