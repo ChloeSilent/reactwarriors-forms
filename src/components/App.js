@@ -1,10 +1,40 @@
 import React from "react";
 
 export default class App extends React.Component {
-    onSubmit = (e) => {
-      e.preventDefault();
-    console.log(this.refs.username.value, this.refs.password.value)
+    constructor() {
+      super();
+        this.state = {
+          username: "",
+          password: "",
+          repeatPassword: ""
+        }
     }
+
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state.password, this.state.username);
+    }
+  onChangeUserName = (e) => {
+      console.log(e.target.value);
+      this.setState({username: e.target.value}
+
+      )
+  }
+
+  onChangePassword = (e) => {
+      this.setState({
+        password:e.target.value
+      })
+  }
+
+  onChangeRepeatPassword = (e) => {
+      this.setState(
+          {
+            repeatPassword: e.target.value
+          }
+      )
+  }
 
     render() {
         //console.log(this);
@@ -17,7 +47,11 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter username"
-                            ref="username"
+                            ref={node => {
+                                this.username = node
+                            }}
+                            value={this.state.username}
+                            onChange={this.onChangeUserName}
                         />
                     </div>
                     <div className="form-group">
@@ -26,7 +60,11 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter password"
-                            ref="password"
+                            ref={node => {
+                                this.password = node
+                            }}
+                            value={this.state.password}
+                            onChange={this.onChangePassword}
                         />
                     </div>
                     <div className="form-group">
@@ -35,7 +73,11 @@ export default class App extends React.Component {
                             type="text"
                             className="form-control"
                             placeholder="Enter repeat password"
-                            ref="repeatPassword"
+                            ref={node => {
+                                this.repeatPassword = node
+                            }}
+                            value={this.state.repeatPassword}
+                            onChange={this.onChangeRepeatPassword}
                         />
                     </div>
                     <button type="submit"
