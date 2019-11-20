@@ -10,7 +10,8 @@ export default class App extends React.Component {
             repeatPassword: "",
             country: "",
             gender: "female",
-            agree: true
+            agree: true,
+            avatar: ""
         }
     }
 
@@ -25,11 +26,10 @@ export default class App extends React.Component {
         )
     }
     onChangeAgree = e => {
-      console.log(e.target.name, e.target.checked);
-      this.setState(
-
-          { [e.target.name]: !e.target.value }
-      )
+        console.log(e.target.name, e.target.checked);
+        this.setState(
+            {[e.target.name]: !e.target.value}
+        )
     }
 
     getOptionsItems = (items) => {
@@ -38,6 +38,19 @@ export default class App extends React.Component {
                 return <option key={item.id} value={item.name}>{item.name}</option>;
             })
         )
+    }
+
+    onChangeAvatar = e => {
+        // e.preventDefault();
+        const reader = new FileReader();
+        reader.onload = e => {
+            // console.log(e.target.result);
+            this.setState({
+                avatar: e.target.result
+            })
+        }
+        //console.log(e.target.files[0]);
+        reader.readAsDataURL(e.target.files[0]);
     }
 
     render() {
@@ -118,7 +131,18 @@ export default class App extends React.Component {
                             </label>
                         </div>
                     </fieldset>
-                    <div className="form-check">
+                    <div className="form-group">
+                        <label htmlFor="avatar">Avatar</label>
+                        <input
+                            type="file"
+                            className="form-control-file"
+                            id="avatar"
+                            name="avatar"
+                            // value={this.state.avatar}
+                            onChange={this.onChangeAvatar}
+                        />
+                    </div>
+                    <div className="form-check mb-2">
                         <input className="form-check-input"
                                type="checkbox"
                                id="agree"
